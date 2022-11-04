@@ -10,10 +10,10 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Pessoas.hasMany(models.Turmas,{
+      Pessoas.hasMany(models.Turmas, {
         foreignKey: 'docente_id'
       });
-      Pessoas.hasMany(models.Matriculas,{
+      Pessoas.hasMany(models.Matriculas, {
         foreignKey: 'estudante_id'
       });
     }
@@ -25,6 +25,17 @@ module.exports = (sequelize, DataTypes) => {
     role: DataTypes.STRING
   }, {
     sequelize,
+    paranoid: true,
+    defaultScope: {
+      where: {
+        ativo: true
+      }
+    },
+    scopes: {
+      todos: {
+        where: {}
+      }
+    },
     modelName: 'Pessoas',
   });
   return Pessoas;
